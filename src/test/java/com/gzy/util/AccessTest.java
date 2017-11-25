@@ -39,7 +39,7 @@ public class AccessTest {
      */
     @Test
     public void testAccess() throws Exception {
-        List<String> inputWebsite = Arrays.asList(new String[]{"http://www.baidu.com", "http://www.taobao.com", "http://www.qq.com"});
+        List<String> inputWebsite = Arrays.asList(new String[]{"http://www.gzy.com", "http://www.taobao.com", "http://www.qq.com"});
         access.access(inputWebsite);
     }
 

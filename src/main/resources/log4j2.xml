@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="300">
+    <Properties>
+        <Property name="accessFile">logs/access</Property>
+        <Property name="traceFile">logs/website-access-all</Property>
+        <Property name="infoFile">logs/website-access</Property>
+        <Property name="warnFile">logs/website-access-wf</Property>
+        <Property name="pattern">%-d{yyyy-MM-dd HH:mm:ss,SSS}[%p][%X{uuid}][%t][%F:%M(%L)] - %m%n</Property>
+    </Properties>
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${pattern}"/>
+        </Console>
+
+        <RollingFile name="AccessLog" fileName="${accessFile}.log"
+                     filePattern="${accessFile}_%d{yyyy-MM-dd}_%i.log.gz">
+            <MarkerFilter marker="ACCESS" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="TraceLog" fileName="${traceFile}.log"
+                     filePattern="${traceFile}_%i.log.gz">
+            <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+        <RollingFile name="NoticeLog" fileName="${infoFile}.log"
+                     filePattern="${infoFile}_%i.log.gz">
+            <MarkerFilter marker="ACCESS" onMatch="DENY" onMismatch="ACCEPT"/>
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+        <RollingFile name="WarnLog" fileName="${warnFile}.log"
+                     filePattern="${warnFile}_%i.log.gz">
+            <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+        <logger name="log4j.logger.org.apache.commons" level="info"></logger>
+        <logger name="log4j.logger.org.apache.commons.httpclient" level="warn"></logger>
+        <logger name="org.eclipse.jetty" level="info" />
+
+        <root level="info">
+            <appender-ref ref="AccessLog"/>
+            <appender-ref ref="NoticeLog"/>
+            <appender-ref ref="WarnLog"/>
+        </root>
+    </loggers>
+</Configuration>
