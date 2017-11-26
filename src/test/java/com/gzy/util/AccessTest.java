@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Access Tester.
  *
@@ -39,8 +36,7 @@ public class AccessTest {
      */
     @Test
     public void testAccess() throws Exception {
-        List<String> inputWebsite = Arrays.asList(new String[]{"http://www.gzy.com", "http://www.taobao.com", "http://www.qq.com"});
-        access.access(inputWebsite);
+        access.access();
     }
 
     /**
