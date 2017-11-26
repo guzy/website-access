@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /**
  * Access Tester.
  *
- * @author <Authors name>
+ * @author <guzeyu>
  * @version 1.0
  * @since <pre>Nov 22, 2017</pre>
  */
@@ -38,14 +38,4 @@ public class AccessTest {
     public void testAccess() throws Exception {
         access.access();
     }
-
-    /**
-     * Method: doAccess(String website)
-     */
-    @Test
-    public void testDoAccess() throws Exception {
-
-    }
-
-
 }
